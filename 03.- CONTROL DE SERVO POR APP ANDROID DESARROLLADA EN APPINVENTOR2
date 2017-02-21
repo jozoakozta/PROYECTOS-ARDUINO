@@ -1,0 +1,33 @@
+/*CONTROL DE SERVOS POR APLICACIÓN ANDROID REALIZADA EN APPINVENTOR2*/
+//Desarrollado por José Acosta      2017 - 02 - 21
+//jz.akta@gmail.com
+
+#include<SoftwareSerial.h>
+#include <Servo.h>
+Servo servito;
+
+int BlueTx= 10;
+int BlueRx= 11;
+
+SoftwareSerial bluetooth (BlueTx , BlueRx);
+
+void setup() {
+ 
+servito.attach(9);    //Establecemos la salida del servo al pin 9
+Serial.begin(9600);   //Establecemos la comunicación serial
+
+bluetooth.begin(9600);  //Enñazamos comunicación con bluetooth
+
+}
+
+void loop() {
+
+  if (bluetooth.available()>0)        //Si existe comunicación se realizará lo siguiente:
+  {
+    int posicion = bluetooth.read();  //lectura de posición y asignación a variable
+    Serial.println(posicion);         //impresión de posición
+    servito.write(posicion);          //Escritura de posición en servomotor
+  }
+
+
+}
